@@ -1,0 +1,20 @@
+[
+  {
+    "Nome": "Matrix",
+    "Ano": 1993,
+    "NoPlano": false,
+    "Avaliacao": 0.0,
+    "NumNotas": 0,
+    "SomaNotas": 0.0,
+    "Tempo": 60
+  },
+  {
+    "Nome": "The Matrix Reloaded",
+    "Ano": 2003,
+    "NoPlano": false,
+    "Avaliacao": 0.0,
+    "NumNotas": 0,
+    "SomaNotas": 0.0,
+    "Tempo": 13
+  }
+]
