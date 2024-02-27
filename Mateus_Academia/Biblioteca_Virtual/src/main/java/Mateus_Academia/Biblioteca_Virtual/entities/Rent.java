@@ -21,8 +21,8 @@ public class Rent {
     public void setDateOfRentAndDevolution() {
         Date date1 = new Date();
         Date date2 = new Date(System.currentTimeMillis() + 86400000 * 2);
-        this.dateOfRent = date1.toString();
-        this.dateOfDevolution = date2.toString();
+        this.dateOfRent = date1;
+        this.dateOfDevolution = date2;
     }
 
 
@@ -31,10 +31,10 @@ public class Rent {
     private Long id;
 
 
-    private String dateOfRent;
+    private Date dateOfRent;
 
 
-    private String dateOfDevolution;
+    private Date dateOfDevolution;
 
     @OneToMany(targetEntity = Book.class)
     private List<Book> booksRented = new ArrayList<>();

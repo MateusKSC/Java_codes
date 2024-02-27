@@ -39,8 +39,8 @@ public class AuthorController {
         return ResponseEntity.ok(authorService.findByName(name));
     }
     @GetMapping(path = "/{authorId}/books")
-    public ResponseEntity<List<Book>> listAllBooks(@PathVariable long authorId) {
-        return ResponseEntity.ok(authorService.listAllBooks(authorId));
+    public ResponseEntity<List<Book>> listAllBooksFromAuthor(@PathVariable long authorId) {
+        return ResponseEntity.ok(authorService.listAllBooksFromAuthor(authorId));
     }
 
     @PostMapping

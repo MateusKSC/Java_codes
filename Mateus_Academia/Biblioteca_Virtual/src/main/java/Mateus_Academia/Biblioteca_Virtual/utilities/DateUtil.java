@@ -1,5 +1,7 @@
 package Mateus_Academia.Biblioteca_Virtual.utilities;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;

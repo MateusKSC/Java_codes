@@ -15,6 +15,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import static Mateus_Academia.Biblioteca_Virtual.Utils.RenterEntitiesBuilder.renterBuilder;
+
 @DataJpaTest
 @DisplayName("Tests for Renter Repository")
 class RenterRepositoryTest {
@@ -103,19 +105,5 @@ class RenterRepositoryTest {
         Assertions.assertThatExceptionOfType(ConstraintViolationException.class)
                 .isThrownBy(() -> renterRepository.save(renter))
                 .withMessageContaining("The given Renter's email has an invalid format");
-    }
-
-
-
-    private Renter renterBuilder() {
-        Date date = new Date();
-        return Renter.builder()
-                .name("Renter_Test")
-                .cpf("00000000000")
-                .birthDate(date)
-                .email("email@email.com")
-                .telephone("000000000")
-                .rentsMade(null)
-                .build();
     }
 }

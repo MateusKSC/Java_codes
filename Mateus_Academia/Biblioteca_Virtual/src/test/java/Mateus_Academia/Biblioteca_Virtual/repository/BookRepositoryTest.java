@@ -12,6 +12,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import static Mateus_Academia.Biblioteca_Virtual.Utils.BookEntitiesBuilder.bookBuilder;
+
 @DataJpaTest
 @DisplayName("Tests for Book Repository")
 class BookRepositoryTest {
@@ -87,14 +89,5 @@ class BookRepositoryTest {
         Assertions.assertThatExceptionOfType(ConstraintViolationException.class)
                 .isThrownBy(() -> bookRepository.save(book))
                 .withMessageContaining("The ISBN's pattern is invalid!");
-    }
-    private Book bookBuilder(){
-        Date date = new Date();
-        return Book.builder()
-                .name("Book_Test")
-                .publicationDate(date)
-                .authors(null)
-                .isbn("9780596520687")
-                .build();
     }
 }

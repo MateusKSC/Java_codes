@@ -1,6 +1,7 @@
 package Mateus_Academia.Biblioteca_Virtual.requests;
 
 import Mateus_Academia.Biblioteca_Virtual.entities.Author;
+import lombok.Builder;
 import lombok.Data;
 import net.bytebuddy.implementation.bind.annotation.Empty;
 
@@ -14,6 +15,7 @@ import java.util.Date;
 import java.util.List;
 
 @Data
+@Builder
 public class BookPostRequestBody {
     @NotEmpty(message = "The name cannot be empty!")
     private String name;

@@ -28,24 +28,31 @@ public class RenterService {
     public List<Renter> listAll() {
         return renterRepository.findAll();
     }
+
     public List<Renter> findByName(String name) {
         List<Renter> renters = renterRepository.findByName(name);
-        if (renters.isEmpty()){
+        if (renters.isEmpty()) {
             throw new BadRequestException("Renter not Found");
         }
         return renters;
     }
+
     public Renter findByIdOrThrowBadRequestException(long renterId) {
         return renterRepository.findById(renterId)
                 .orElseThrow(() -> new BadRequestException("The given Renter was not Found"));
     }
-@Transactional
+
+    @Transactional
     public Renter save(RenterPostRequestBody renterPostRequestBody) {
         Renter renter = new Renter();
-        if(isCpfUnique(renterPostRequestBody.getCpf()) && isEmailUnique(
-                renterPostRequestBody.getEmail()) && isTelephoneUnique(
-                renterPostRequestBody.getTelephone())){
-            renter = renterRepository.save(RenterMapper.INSTANCE.toRenter(renterPostRequestBody));
+        if (isCpfUnique(renterPostRequestBody.getCpf(),
+                renter,"save")
+                && isEmailUnique(renterPostRequestBody.getEmail(),
+                renter,"save")
+                && isTelephoneUnique(renterPostRequestBody.getTelephone(),
+                renter,"save")) {
+            renter = renterRepository.save(RenterMapper.
+                    INSTANCE.toRenter(renterPostRequestBody));
         }
         return renter;
     }
@@ -53,19 +60,27 @@ public class RenterService {
 
     public void delete(long renterId) {
         Renter renter = findByIdOrThrowBadRequestException(renterId);
-        if(renter.getRentsMade().isEmpty()) {
+        if (renter.getRentsMade().isEmpty()) {
             renterRepository.delete(findByIdOrThrowBadRequestException(renterId));
             log.info("The given renter was successfully deleted");
-        }
-        else{
+        } else {
             throw new BadRequestException("The given renter still has pending rents!");
         }
     }
+
     public void replace(RenterPutRequestBody renterPutRequestBody) {
         Renter savedRenter = findByIdOrThrowBadRequestException(renterPutRequestBody.getId());
         Renter renter = RenterMapper.INSTANCE.toRenter(renterPutRequestBody);
         renter.setId(savedRenter.getId());
-        renterRepository.save(renter);
+        renter.setRentsMade(savedRenter.getRentsMade());
+        if (isCpfUnique(renter.getCpf(),
+                renter,"put")
+                && isEmailUnique(renter.getEmail(),
+                renter,"put")
+                && isTelephoneUnique(renter.getTelephone(),
+                renter,"put")) {
+            renterRepository.save(renter);
+        }
     }
 
     public List<Book> listAllRentedBooksByRenter(long renterId) {
@@ -74,75 +89,113 @@ public class RenterService {
         List<Book> books = rent.getBooksRented();
         return books;
     }
-    public boolean isCpfUnique(String cpf){
+
+    public boolean isCpfUnique(String cpf, Renter validatedRenter, String requestMethod) {
         boolean authorCpfUnique = false;
         boolean renterCpfUnique = false;
         List<Author> authors = authorRepository.findAll();
         List<Renter> renters = renterRepository.findAll();
-        if(!(renters.isEmpty())) {
-            for (Renter renter : renters) {
-                if (renter.getCpf().equals(cpf)) {
-                    throw new BadRequestException("the given renter's CPF is already registered in the " +
-                            "database. Verify the renter of name " + renter.getName());
+
+        if (!(renters.isEmpty())) {
+            if (requestMethod.equals("put")) {
+                for (Renter renter : renters) {
+                    if ((renter.getCpf().equals(cpf)) && !(renter.getId().equals(validatedRenter.getId()))) {
+                        throw new BadRequestException("the given renter's CPF is already registered in the " +
+                                "database. Verify the renter of name " + renter.getName());
+                    } else {
+                        renterCpfUnique = true;
+                    }
                 }
-                else{
-                    renterCpfUnique = true;
+            }
+            else if (requestMethod.equals("save")) {
+                for (Renter renter : renters) {
+                    if (renter.getCpf().equals(cpf)) {
+                        throw new BadRequestException("the given renter's CPF is already registered in the " +
+                                "database. Verify the renter of name " + renter.getName());
+                    } else {
+                        renterCpfUnique = true;
+                    }
                 }
             }
         }
-        else{
+        else {
             renterCpfUnique = true;
         }
-        if(!(authors.isEmpty())) {
+        if (!(authors.isEmpty())) {
             for (Author author : authors) {
                 if (author.getCpf().equals(cpf)) {
                     throw new BadRequestException("the given renter's CPF is already registered in the " +
                             "database. Verify the author of name " + author.getName());
-                }
-                else{
+                } else {
                     authorCpfUnique = true;
                 }
             }
-        }
-        else{
+        } else {
             authorCpfUnique = true;
         }
         return (authorCpfUnique && renterCpfUnique);
     }
-    public boolean isEmailUnique(String email){
+
+    public boolean isEmailUnique(String email, Renter validatedRenter, String requestMethod) {
         boolean unique = false;
         List<Renter> renters = renterRepository.findAll();
-        if(!(renters.isEmpty())) {
-            for (Renter renter : renters) {
-                if (!(renter.getEmail().equals(email))) {
-                    unique = true;
-                } else {
-                    throw new BadRequestException("the given renter's email is already registered in the " +
-                            "database. Verify the renter of name " + renter.getName());
+        if (!(renters.isEmpty())) {
+            if (requestMethod.equals("put")) {
+                for (Renter renter : renters) {
+                    if ((renter.getEmail().equals(email)) && !(renter.getId().equals(validatedRenter.getId()))) {
+                        throw new BadRequestException("the given renter's email is already registered in the " +
+                                "database. Verify the renter of name " + renter.getName());
+                    } else {
+                        unique = true;
+                    }
+                }
+            }
+            else if (requestMethod.equals("save")) {
+                for (Renter renter : renters) {
+                    if (renter.getEmail().equals(email)) {
+                        throw new BadRequestException("the given renter's email is already registered in the " +
+                                "database. Verify the renter of name " + renter.getName());
+                    } else {
+                        unique = true;
+                    }
                 }
             }
         }
-        else{
+        else {
             unique = true;
         }
         return unique;
     }
-    public boolean isTelephoneUnique(String telephone){
+
+    public boolean isTelephoneUnique(String telephone, Renter validatedRenter, String requestMethod) {
         boolean unique = false;
         List<Renter> renters = renterRepository.findAll();
-        if(!(renters.isEmpty())) {
-            for (Renter renter : renters) {
-                if (!(renter.getTelephone().equals(telephone))) {
-                    unique = true;
-                } else {
-                    throw new BadRequestException("the given renter's telephone is already registered in the " +
-                            "database. Verify the renter of name " + renter.getName());
+        if (!(renters.isEmpty())) {
+            if (requestMethod.equals("put")) {
+                    for (Renter renter : renters) {
+                        if ((renter.getTelephone().equals(telephone)) && !(renter.getId().equals(validatedRenter.getId()))) {
+                            throw new BadRequestException("the given renter's telephone is already registered in the " +
+                                    "database. Verify the renter of name " + renter.getName());
+                        } else {
+                            unique = true;
+                        }
+                    }
+                }
+             else if (requestMethod.equals("save")) {
+                for (Renter renter : renters) {
+                    if (renter.getTelephone().equals(telephone)) {
+                        throw new BadRequestException("the given renter's telephone is already registered in the " +
+                                "database. Verify the renter of name " + renter.getName());
+                    } else {
+                        unique = true;
+                    }
                 }
             }
         }
-        else{
+        else {
             unique = true;
         }
         return unique;
+
     }
 }

@@ -104,6 +104,7 @@ public class BookService {
         book.setAuthors(savedBook.getAuthors());
         bookRepository.save(book);
     }
+
     public boolean isIsbnUnique(String isbn){
         boolean unique = false;
         List<Book> books = bookRepository.findAll();
@@ -123,5 +124,9 @@ public class BookService {
         return unique;
     }
 
-
+    public List<Author> listAllAuthors(long bookId) {
+        Book book = findByIdOrThrowBadRequestException(bookId);
+        List<Author> authors = book.getAuthors();
+        return authors;
+    }
 }

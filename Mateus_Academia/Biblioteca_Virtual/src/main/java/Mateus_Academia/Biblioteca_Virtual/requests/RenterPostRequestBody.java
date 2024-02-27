@@ -1,5 +1,6 @@
 package Mateus_Academia.Biblioteca_Virtual.requests;
 
+import lombok.Builder;
 import lombok.Data;
 
 import javax.validation.constraints.NotEmpty;
@@ -8,6 +9,7 @@ import javax.validation.constraints.Pattern;
 import java.util.Date;
 
 @Data
+@Builder
 public class RenterPostRequestBody {
     @NotEmpty(message = "The name cannot be empty!")
     private String name;

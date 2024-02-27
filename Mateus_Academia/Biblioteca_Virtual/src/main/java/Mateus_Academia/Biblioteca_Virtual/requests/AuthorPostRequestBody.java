@@ -1,5 +1,6 @@
 package Mateus_Academia.Biblioteca_Virtual.requests;
 
+import lombok.Builder;
 import lombok.Data;
 import org.hibernate.validator.constraints.Range;
 
@@ -8,6 +9,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 @Data
+@Builder
 public class AuthorPostRequestBody {
     @NotEmpty(message = "The name cannot be empty!")
     private String name;

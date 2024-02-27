@@ -50,8 +50,9 @@ public class RentController {
     }
 
     @PutMapping(path = "/{rentId}")
-    public ResponseEntity<Rent> replace(@PathVariable long rentId) {
-        return new ResponseEntity<>(rentService.replace(rentId), HttpStatus.CREATED);
+    public ResponseEntity<Void> replace(@PathVariable long rentId) {
+        rentService.replace(rentId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @DeleteMapping(path = "/{rentId}")
