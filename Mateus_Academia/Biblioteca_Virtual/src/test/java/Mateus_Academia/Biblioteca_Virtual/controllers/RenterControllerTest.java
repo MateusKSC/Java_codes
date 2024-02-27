@@ -37,7 +37,7 @@ class RenterControllerTest {
 
 
     @BeforeEach
-    void setUp(){
+    void setUp() {
         BDDMockito.when(renterServiceMock.listAll())
                 .thenReturn(List.of(RenterEntitiesBuilder.renterBuilder()));
 
@@ -60,7 +60,7 @@ class RenterControllerTest {
 
     @Test
     @DisplayName("list: returns a list of all renters when successful")
-    void list_ReturnsListOfRenters_WhenSuccessful(){
+    void list_ReturnsListOfRenters_WhenSuccessful() {
         String expectedName = RenterEntitiesBuilder.renterBuilder().getName();
 
         List<Renter> renters = renterController.list().getBody();
@@ -72,9 +72,10 @@ class RenterControllerTest {
 
         Assertions.assertThat(renters.get(0).getName()).isEqualTo(expectedName);
     }
+
     @Test
     @DisplayName("listAllAuthors: returns a list of Authors when successful")
-    void listAllRentedBooksByRenter_ReturnsListOfAuthors_WhenSuccessful(){
+    void listAllRentedBooksByRenter_ReturnsListOfAuthors_WhenSuccessful() {
         ResponseEntity<List<Book>> books = renterController.listAllRentedBooksByRenter(ArgumentMatchers.anyLong());
         Assertions.assertThat(books.getBody())
                 .isNotNull()
@@ -87,7 +88,7 @@ class RenterControllerTest {
 
     @Test
     @DisplayName("findById: returns renter when successful")
-    void findById_ReturnsRenter_WhenSuccessful(){
+    void findById_ReturnsRenter_WhenSuccessful() {
         Long expectedId = RenterEntitiesBuilder.renterBuilder().getId();
 
         Renter renter = renterController.findById(RenterEntitiesBuilder.renterBuilder().getId()).getBody();
@@ -99,7 +100,7 @@ class RenterControllerTest {
 
     @Test
     @DisplayName("findByName: returns a list of renters when successful")
-    void findByName_ReturnsListOfRenter_WhenSuccessful(){
+    void findByName_ReturnsListOfRenter_WhenSuccessful() {
         String expectedName = RenterEntitiesBuilder.renterBuilder().getName();
 
         List<Renter> renters = renterController.findByName("renter").getBody();
@@ -114,7 +115,7 @@ class RenterControllerTest {
 
     @Test
     @DisplayName("findByName: returns an empty list when the renter wasn't found")
-    void findByName_ReturnsEmptyListOfRenter_WhenRenterIsNotFound(){
+    void findByName_ReturnsEmptyListOfRenter_WhenRenterIsNotFound() {
         BDDMockito.when(renterServiceMock.findByName(ArgumentMatchers.anyString()))
                 .thenReturn(Collections.emptyList());
 
@@ -127,7 +128,7 @@ class RenterControllerTest {
 
     @Test
     @DisplayName("save returns renter when successful")
-    void save_ReturnsRenter_WhenSuccessful(){
+    void save_ReturnsRenter_WhenSuccessful() {
 
         Renter renter = renterController.save(RenterEntitiesBuilder.renterPostRequestBodyBuilder()).getBody();
 
@@ -137,9 +138,9 @@ class RenterControllerTest {
 
     @Test
     @DisplayName("replace updates renter when successful")
-    void replace_UpdatesRenter_WhenSuccessful(){
+    void replace_UpdatesRenter_WhenSuccessful() {
 
-        Assertions.assertThatCode(() ->renterController.replace(RenterEntitiesBuilder.renterPutRequestBodyBuilder()))
+        Assertions.assertThatCode(() -> renterController.replace(RenterEntitiesBuilder.renterPutRequestBodyBuilder()))
                 .doesNotThrowAnyException();
 
         ResponseEntity<Void> entity = renterController.replace(RenterEntitiesBuilder.renterPutRequestBodyBuilder());
@@ -151,9 +152,9 @@ class RenterControllerTest {
 
     @Test
     @DisplayName("delete removes renter when successful")
-    void delete_RemovesRenter_WhenSuccessful(){
+    void delete_RemovesRenter_WhenSuccessful() {
 
-        Assertions.assertThatCode(() ->renterController.delete(1))
+        Assertions.assertThatCode(() -> renterController.delete(1))
                 .doesNotThrowAnyException();
 
         ResponseEntity<Void> entity = renterController.delete(1);

@@ -1,13 +1,13 @@
 package Mateus_Academia.Biblioteca_Virtual.services;
 
-import Mateus_Academia.Biblioteca_Virtual.repository.AuthorRepository;
-import Mateus_Academia.Biblioteca_Virtual.repository.BookRepository;
-import Mateus_Academia.Biblioteca_Virtual.repository.RentRepository;
 import Mateus_Academia.Biblioteca_Virtual.entities.Author;
 import Mateus_Academia.Biblioteca_Virtual.entities.Book;
 import Mateus_Academia.Biblioteca_Virtual.entities.Rent;
 import Mateus_Academia.Biblioteca_Virtual.exceptions.BadRequestException;
 import Mateus_Academia.Biblioteca_Virtual.mapper.BookMapper;
+import Mateus_Academia.Biblioteca_Virtual.repository.AuthorRepository;
+import Mateus_Academia.Biblioteca_Virtual.repository.BookRepository;
+import Mateus_Academia.Biblioteca_Virtual.repository.RentRepository;
 import Mateus_Academia.Biblioteca_Virtual.requests.BookPostRequestBody;
 import Mateus_Academia.Biblioteca_Virtual.requests.BookPutRequestBody;
 import lombok.RequiredArgsConstructor;

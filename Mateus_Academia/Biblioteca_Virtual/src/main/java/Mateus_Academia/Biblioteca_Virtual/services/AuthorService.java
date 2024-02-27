@@ -1,15 +1,15 @@
 package Mateus_Academia.Biblioteca_Virtual.services;
 
-import Mateus_Academia.Biblioteca_Virtual.repository.RenterRepository;
 import Mateus_Academia.Biblioteca_Virtual.entities.Author;
-import Mateus_Academia.Biblioteca_Virtual.repository.AuthorRepository;
 import Mateus_Academia.Biblioteca_Virtual.entities.Book;
 import Mateus_Academia.Biblioteca_Virtual.entities.Renter;
-import Mateus_Academia.Biblioteca_Virtual.requests.AuthorPostRequestBody;
-import lombok.RequiredArgsConstructor;
 import Mateus_Academia.Biblioteca_Virtual.exceptions.BadRequestException;
 import Mateus_Academia.Biblioteca_Virtual.mapper.AuthorMapper;
+import Mateus_Academia.Biblioteca_Virtual.repository.AuthorRepository;
+import Mateus_Academia.Biblioteca_Virtual.repository.RenterRepository;
+import Mateus_Academia.Biblioteca_Virtual.requests.AuthorPostRequestBody;
 import Mateus_Academia.Biblioteca_Virtual.requests.AuthorPutRequestBody;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 

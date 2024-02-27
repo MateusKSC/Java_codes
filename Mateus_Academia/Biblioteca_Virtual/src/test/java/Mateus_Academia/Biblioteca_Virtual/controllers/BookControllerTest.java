@@ -33,7 +33,7 @@ class BookControllerTest {
     private BookService bookServiceMock;
 
     @BeforeEach
-    void setUp(){
+    void setUp() {
         BDDMockito.when(bookServiceMock.listAll())
                 .thenReturn(List.of(BookEntitiesBuilder.bookBuilder()));
 
@@ -46,7 +46,7 @@ class BookControllerTest {
         BDDMockito.when(bookServiceMock.findByName(ArgumentMatchers.anyString()))
                 .thenReturn(List.of(BookEntitiesBuilder.bookBuilder()));
 
-        BDDMockito.when(bookServiceMock.save(ArgumentMatchers.any(),ArgumentMatchers.any()))
+        BDDMockito.when(bookServiceMock.save(ArgumentMatchers.any(), ArgumentMatchers.any()))
                 .thenReturn(BookEntitiesBuilder.bookBuilder());
         BDDMockito.doNothing().when(bookServiceMock).replace(ArgumentMatchers.any(BookPutRequestBody.class));
 
@@ -55,7 +55,7 @@ class BookControllerTest {
 
     @Test
     @DisplayName("list: returns a list of all books when successful")
-    void list_ReturnsListOfBooks_WhenSuccessful(){
+    void list_ReturnsListOfBooks_WhenSuccessful() {
         String expectedName = BookEntitiesBuilder.bookBuilder().getName();
 
         List<Book> books = bookController.list().getBody();
@@ -67,9 +67,10 @@ class BookControllerTest {
 
         Assertions.assertThat(books.get(0).getName()).isEqualTo(expectedName);
     }
+
     @Test
     @DisplayName("listAllAuthors: returns a list of Authors when successful")
-    void listAllAuthors_ReturnsListOfAuthors_WhenSuccessful(){
+    void listAllAuthors_ReturnsListOfAuthors_WhenSuccessful() {
         ResponseEntity<List<Author>> authors = bookController.listAllAuthors(ArgumentMatchers.anyLong());
         Assertions.assertThat(authors.getBody())
                 .isNotNull()
@@ -82,7 +83,7 @@ class BookControllerTest {
 
     @Test
     @DisplayName("findById: returns book when successful")
-    void findById_ReturnsBook_WhenSuccessful(){
+    void findById_ReturnsBook_WhenSuccessful() {
         Long expectedId = BookEntitiesBuilder.bookBuilder().getId();
 
         Book book = bookController.findById(BookEntitiesBuilder.bookBuilder().getId()).getBody();
@@ -94,7 +95,7 @@ class BookControllerTest {
 
     @Test
     @DisplayName("findByName: returns a list of books when successful")
-    void findByName_ReturnsListOfBook_WhenSuccessful(){
+    void findByName_ReturnsListOfBook_WhenSuccessful() {
         String expectedName = BookEntitiesBuilder.bookBuilder().getName();
 
         List<Book> books = bookController.findByName("book").getBody();
@@ -108,7 +109,7 @@ class BookControllerTest {
 
     @Test
     @DisplayName("findByName: returns an empty list when the book wasn't found")
-    void findByName_ReturnsEmptyListOfBook_WhenBookIsNotFound(){
+    void findByName_ReturnsEmptyListOfBook_WhenBookIsNotFound() {
         BDDMockito.when(bookServiceMock.findByName(ArgumentMatchers.anyString()))
                 .thenReturn(Collections.emptyList());
 
@@ -121,7 +122,7 @@ class BookControllerTest {
 
     @Test
     @DisplayName("save returns book when successful")
-    void save_ReturnsBook_WhenSuccessful(){
+    void save_ReturnsBook_WhenSuccessful() {
         Book book = bookController.save(BookEntitiesBuilder.bookPostRequestBodyBuilder(),
                 Collections.emptyList()).getBody();
 
@@ -130,9 +131,9 @@ class BookControllerTest {
 
     @Test
     @DisplayName("replace updates book when successful")
-    void replace_UpdatesBook_WhenSuccessful(){
+    void replace_UpdatesBook_WhenSuccessful() {
 
-        Assertions.assertThatCode(() ->bookController.replace(BookEntitiesBuilder.bookPutRequestBodyBuilder()))
+        Assertions.assertThatCode(() -> bookController.replace(BookEntitiesBuilder.bookPutRequestBodyBuilder()))
                 .doesNotThrowAnyException();
 
         ResponseEntity<Void> entity = bookController.replace(BookEntitiesBuilder.bookPutRequestBodyBuilder());
@@ -144,9 +145,9 @@ class BookControllerTest {
 
     @Test
     @DisplayName("delete removes book when successful")
-    void delete_RemovesBook_WhenSuccessful(){
+    void delete_RemovesBook_WhenSuccessful() {
 
-        Assertions.assertThatCode(() ->bookController.delete(1))
+        Assertions.assertThatCode(() -> bookController.delete(1))
                 .doesNotThrowAnyException();
 
         ResponseEntity<Void> entity = bookController.delete(1);

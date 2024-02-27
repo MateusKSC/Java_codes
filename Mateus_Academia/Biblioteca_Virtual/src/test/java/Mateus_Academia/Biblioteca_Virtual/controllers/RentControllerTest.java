@@ -33,7 +33,7 @@ class RentControllerTest {
     private RentService rentServiceMock;
 
     @BeforeEach
-    void setUp(){
+    void setUp() {
         BDDMockito.when(rentServiceMock.listAll())
                 .thenReturn(List.of(rentBuilder()));
 
@@ -46,7 +46,7 @@ class RentControllerTest {
         BDDMockito.when(rentServiceMock.findByIdOrThrowBadRequestException(ArgumentMatchers.anyLong()))
                 .thenReturn(rentBuilder());
 
-        BDDMockito.when(rentServiceMock.save(ArgumentMatchers.any(),ArgumentMatchers.any()))
+        BDDMockito.when(rentServiceMock.save(ArgumentMatchers.any(), ArgumentMatchers.any()))
                 .thenReturn(rentBuilder());
         BDDMockito.doNothing().when(rentServiceMock).replace(ArgumentMatchers.anyLong());
 
@@ -55,7 +55,7 @@ class RentControllerTest {
 
     @Test
     @DisplayName("list: returns a list of all rents when successful")
-    void list_ReturnsListOfRents_WhenSuccessful(){
+    void list_ReturnsListOfRents_WhenSuccessful() {
         Date expectedDateOfRent = rentBuilder().getDateOfRent();
 
         List<Rent> rents = rentController.list().getBody();
@@ -67,21 +67,23 @@ class RentControllerTest {
 
         Assertions.assertThat(rents.get(0).getDateOfRent()).isEqualTo(expectedDateOfRent);
     }
+
     @Test
     @DisplayName("listAllAvailableBooksForRent: returns a list of books successful")
-    void listAllAvailableBooksForRent_ReturnsListOfBooks_WhenSuccessful(){
+    void listAllAvailableBooksForRent_ReturnsListOfBooks_WhenSuccessful() {
         ResponseEntity<List<Book>> books = rentController.listAllAvailableBooksForRent();
         Assertions.assertThat(books.getBody())
-                        .isNotNull()
-                        .isNotEmpty()
-                        .hasSize(1);
+                .isNotNull()
+                .isNotEmpty()
+                .hasSize(1);
 
         Assertions.assertThat(books.getBody().get(0).getName()).isEqualTo(
                 BookEntitiesBuilder.bookBuilder().getName());
     }
+
     @Test
     @DisplayName("listAllRentedBooks: returns a list of books successful")
-    void listAllRentedBooks_ReturnsListOfBooks_WhenSuccessful(){
+    void listAllRentedBooks_ReturnsListOfBooks_WhenSuccessful() {
         ResponseEntity<List<Book>> books = rentController.listAllRentedBooks();
         Assertions.assertThat(books.getBody())
                 .isNotNull()
@@ -94,7 +96,7 @@ class RentControllerTest {
 
     @Test
     @DisplayName("findById: returns rent when successful")
-    void findById_ReturnsRent_WhenSuccessful(){
+    void findById_ReturnsRent_WhenSuccessful() {
         Long expectedId = rentBuilder().getId();
 
         Rent rent = rentController.findById(rentBuilder().getId()).getBody();
@@ -106,17 +108,17 @@ class RentControllerTest {
 
     @Test
     @DisplayName("save returns rent when successful")
-    void save_ReturnsRent_WhenSuccessful(){
-        Rent rent = rentController.save(ArgumentMatchers.any(),ArgumentMatchers.any()).getBody();
+    void save_ReturnsRent_WhenSuccessful() {
+        Rent rent = rentController.save(ArgumentMatchers.any(), ArgumentMatchers.any()).getBody();
 
         Assertions.assertThat(rent).isNotNull().isEqualTo(rentBuilder());
     }
 
     @Test
     @DisplayName("replace updates rent when successful")
-    void replace_UpdatesRent_WhenSuccessful(){
+    void replace_UpdatesRent_WhenSuccessful() {
 
-        Assertions.assertThatCode(() ->rentController.replace(rentBuilder().getId()))
+        Assertions.assertThatCode(() -> rentController.replace(rentBuilder().getId()))
                 .doesNotThrowAnyException();
 
         ResponseEntity<Void> entity = rentController.replace(rentBuilder().getId());
@@ -128,9 +130,9 @@ class RentControllerTest {
 
     @Test
     @DisplayName("delete removes rent when successful")
-    void delete_RemovesRent_WhenSuccessful(){
+    void delete_RemovesRent_WhenSuccessful() {
 
-        Assertions.assertThatCode(() ->rentController.delete(1))
+        Assertions.assertThatCode(() -> rentController.delete(1))
                 .doesNotThrowAnyException();
 
         ResponseEntity<Void> entity = rentController.delete(1);

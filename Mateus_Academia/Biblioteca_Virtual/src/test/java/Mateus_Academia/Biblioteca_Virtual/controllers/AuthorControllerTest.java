@@ -37,7 +37,7 @@ class AuthorControllerTest {
 
 
     @BeforeEach
-    void setUp(){
+    void setUp() {
         BDDMockito.when(authorServiceMock.listAll())
                 .thenReturn(List.of(AuthorEntitiesBuilder.authorBuilder()));
 
@@ -60,7 +60,7 @@ class AuthorControllerTest {
 
     @Test
     @DisplayName("list: returns a list of all authors when successful")
-    void list_ReturnsListOfAuthors_WhenSuccessful(){
+    void list_ReturnsListOfAuthors_WhenSuccessful() {
         String expectedName = AuthorEntitiesBuilder.authorBuilder().getName();
 
         List<Author> authors = authorController.list().getBody();
@@ -75,7 +75,7 @@ class AuthorControllerTest {
 
     @Test
     @DisplayName("findById: returns author when successful")
-    void findById_ReturnsAuthor_WhenSuccessful(){
+    void findById_ReturnsAuthor_WhenSuccessful() {
         Long expectedId = AuthorEntitiesBuilder.authorBuilder().getId();
 
         Author author = authorController.findById(AuthorEntitiesBuilder.authorBuilder().getId()).getBody();
@@ -87,7 +87,7 @@ class AuthorControllerTest {
 
     @Test
     @DisplayName("findByName: returns a list of authors when successful")
-    void findByName_ReturnsListOfAuthor_WhenSuccessful(){
+    void findByName_ReturnsListOfAuthor_WhenSuccessful() {
         String expectedName = AuthorEntitiesBuilder.authorBuilder().getName();
 
         List<Author> authors = authorController.findByName("author").getBody();
@@ -102,7 +102,7 @@ class AuthorControllerTest {
 
     @Test
     @DisplayName("findByName: returns an empty list when the author wasn't found")
-    void findByName_ReturnsEmptyListOfAuthor_WhenAuthorIsNotFound(){
+    void findByName_ReturnsEmptyListOfAuthor_WhenAuthorIsNotFound() {
         BDDMockito.when(authorServiceMock.findByName(ArgumentMatchers.anyString()))
                 .thenReturn(Collections.emptyList());
 
@@ -112,9 +112,10 @@ class AuthorControllerTest {
                 .isNotNull()
                 .isEmpty();
     }
+
     @Test
     @DisplayName("listAllBooksFromAuthor: returns the list of books from the specified author")
-    void listAllBooksFromAuthor_ReturnsListOfBooksFromSpecifiedAuthor_WhenSuccessful(){
+    void listAllBooksFromAuthor_ReturnsListOfBooksFromSpecifiedAuthor_WhenSuccessful() {
         String expectedName = BookEntitiesBuilder.bookBuilder().getName();
 
         ResponseEntity<List<Book>> booksFromAuthor = authorController.listAllBooksFromAuthor(
@@ -130,7 +131,7 @@ class AuthorControllerTest {
 
     @Test
     @DisplayName("save returns author when successful")
-    void save_ReturnsAuthor_WhenSuccessful(){
+    void save_ReturnsAuthor_WhenSuccessful() {
 
         Author author = authorController.save(AuthorEntitiesBuilder.authorPostRequestBodyBuilder()).getBody();
 
@@ -140,9 +141,9 @@ class AuthorControllerTest {
 
     @Test
     @DisplayName("replace updates author when successful")
-    void replace_UpdatesAuthor_WhenSuccessful(){
+    void replace_UpdatesAuthor_WhenSuccessful() {
 
-        Assertions.assertThatCode(() ->authorController.replace(AuthorEntitiesBuilder.authorPutRequestBodyBuilder()))
+        Assertions.assertThatCode(() -> authorController.replace(AuthorEntitiesBuilder.authorPutRequestBodyBuilder()))
                 .doesNotThrowAnyException();
 
         ResponseEntity<Void> entity = authorController.replace(AuthorEntitiesBuilder.authorPutRequestBodyBuilder());
@@ -154,9 +155,9 @@ class AuthorControllerTest {
 
     @Test
     @DisplayName("delete removes author when successful")
-    void delete_RemovesAuthor_WhenSuccessful(){
+    void delete_RemovesAuthor_WhenSuccessful() {
 
-        Assertions.assertThatCode(() ->authorController.delete(1))
+        Assertions.assertThatCode(() -> authorController.delete(1))
                 .doesNotThrowAnyException();
 
         ResponseEntity<Void> entity = authorController.delete(1);

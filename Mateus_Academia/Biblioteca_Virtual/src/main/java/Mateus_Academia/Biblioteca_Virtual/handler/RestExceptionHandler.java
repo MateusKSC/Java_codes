@@ -1,10 +1,10 @@
 package Mateus_Academia.Biblioteca_Virtual.handler;
 
-import lombok.extern.log4j.Log4j2;
 import Mateus_Academia.Biblioteca_Virtual.exceptions.BadRequestException;
 import Mateus_Academia.Biblioteca_Virtual.exceptions.BadRequestExceptionDetails;
 import Mateus_Academia.Biblioteca_Virtual.exceptions.ExceptionDetails;
 import Mateus_Academia.Biblioteca_Virtual.exceptions.ValidationExceptionDetails;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
