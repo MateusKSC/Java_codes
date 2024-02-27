@@ -23,15 +23,16 @@ public class RentController {
     private final RentService rentService;
 
 
+
     @GetMapping
     public ResponseEntity<List<Rent>> list() {
         log.info(dateUtil.formatLocalDateTimeToDatabaseStyle(LocalDateTime.now()));
         return ResponseEntity.ok(rentService.listAll());
     }
 
-    @GetMapping(path = "/{rentId}")
-    public ResponseEntity<Rent> findById(@PathVariable long rentId) {
-        return ResponseEntity.ok(rentService.findByIdOrThrowBadRequestException(rentId));
+    @GetMapping(path = "/{id}")
+    public ResponseEntity<Rent> findById(@PathVariable long id) {
+        return ResponseEntity.ok(rentService.findByIdOrThrowBadRequestException(id));
     }
 
     @GetMapping(path = "/rentedBooks")
@@ -39,26 +40,18 @@ public class RentController {
         log.info(dateUtil.formatLocalDateTimeToDatabaseStyle(LocalDateTime.now()));
         return ResponseEntity.ok(rentService.listAllRentedBooks());
     }
-
     @GetMapping(path = "/availableBooks")
     public ResponseEntity listAllAvailableBooksForRent() {
         return ResponseEntity.ok(rentService.listAllAvailableBooksForRent());
     }
-
     @PostMapping(path = "/{renterName}/{bookNames}")
     public ResponseEntity<Rent> save(@PathVariable String renterName, @PathVariable List<String> bookNames) {
         return new ResponseEntity<>(rentService.save(renterName, bookNames), HttpStatus.CREATED);
     }
 
-    @PutMapping(path = "/{rentId}")
-    public ResponseEntity<Void> replace(@PathVariable long rentId) {
-        rentService.replace(rentId);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
-
-    @DeleteMapping(path = "/{rentId}")
-    public ResponseEntity<Void> delete(@PathVariable long rentId) {
-        rentService.delete(rentId);
+    @DeleteMapping(path = "/{id}")
+    public ResponseEntity<Void> delete(@PathVariable long id) {
+        rentService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
