@@ -1,10 +1,10 @@
 package Mateus_Academia.Biblioteca_Virtual.mapper;
 
-import org.mapstruct.Mapper;
-import org.mapstruct.factory.Mappers;
 import Mateus_Academia.Biblioteca_Virtual.entities.Author;
 import Mateus_Academia.Biblioteca_Virtual.requests.AuthorPostRequestBody;
 import Mateus_Academia.Biblioteca_Virtual.requests.AuthorPutRequestBody;
+import org.mapstruct.Mapper;
+import org.mapstruct.factory.Mappers;
 
 @Mapper(componentModel = "spring")
 public abstract class AuthorMapper {

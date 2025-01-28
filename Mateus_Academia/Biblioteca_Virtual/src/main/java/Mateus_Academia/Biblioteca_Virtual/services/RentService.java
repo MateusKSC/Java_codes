@@ -1,12 +1,12 @@
 package Mateus_Academia.Biblioteca_Virtual.services;
 
-import Mateus_Academia.Biblioteca_Virtual.repository.BookRepository;
-import Mateus_Academia.Biblioteca_Virtual.repository.RentRepository;
-import Mateus_Academia.Biblioteca_Virtual.repository.RenterRepository;
 import Mateus_Academia.Biblioteca_Virtual.entities.Book;
 import Mateus_Academia.Biblioteca_Virtual.entities.Rent;
 import Mateus_Academia.Biblioteca_Virtual.entities.Renter;
 import Mateus_Academia.Biblioteca_Virtual.exceptions.BadRequestException;
+import Mateus_Academia.Biblioteca_Virtual.repository.BookRepository;
+import Mateus_Academia.Biblioteca_Virtual.repository.RentRepository;
+import Mateus_Academia.Biblioteca_Virtual.repository.RenterRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -105,7 +105,7 @@ public class RentService {
         return rentedBooks;
     }
 
-    public Rent replace(long rentId) {
+    public void replace(long rentId) {
         Rent savedRent = findByIdOrThrowBadRequestException(rentId);
         Rent updatedRent = Rent.builder()
                 .booksRented(savedRent.getBooksRented())
@@ -114,6 +114,5 @@ public class RentService {
         updatedRent.setId(rentId);
         updatedRent.setDateOfRentAndDevolution();
         rentRepository.save(updatedRent);
-        return (updatedRent);
     }
 }

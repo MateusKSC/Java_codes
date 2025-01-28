@@ -1,15 +1,15 @@
 package Mateus_Academia.Biblioteca_Virtual.requests;
 
+import lombok.Builder;
 import lombok.Data;
 
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.util.Date;
 
 @Data
+@Builder
 public class BookPutRequestBody {
     private Long id;
 

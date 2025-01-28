@@ -1,5 +1,6 @@
 package Mateus_Academia.Biblioteca_Virtual.controllers;
 
+import Mateus_Academia.Biblioteca_Virtual.entities.Author;
 import Mateus_Academia.Biblioteca_Virtual.entities.Book;
 import Mateus_Academia.Biblioteca_Virtual.requests.BookPostRequestBody;
 import Mateus_Academia.Biblioteca_Virtual.requests.BookPutRequestBody;
@@ -35,15 +36,21 @@ public class BookController {
     public ResponseEntity<Book> findById(@PathVariable long id) {
         return ResponseEntity.ok(bookService.findByIdOrThrowBadRequestException(id));
     }
+
     @GetMapping(path = "/find")
     public ResponseEntity<List<Book>> findByName(@RequestParam String name) {
         return ResponseEntity.ok(bookService.findByName(name));
     }
 
+    @GetMapping(path = "/{bookId}/authors")
+    public ResponseEntity<List<Author>> listAllAuthors(@PathVariable long bookId) {
+        return ResponseEntity.ok(bookService.listAllAuthors(bookId));
+    }
+
     @PostMapping(path = "/{authorNames}")
     public ResponseEntity<Book> save(
             @RequestBody @Valid BookPostRequestBody bookPostRequestBody, @PathVariable List<String> authorNames) {
-        return new ResponseEntity<>(bookService.save(bookPostRequestBody,authorNames), HttpStatus.CREATED);
+        return new ResponseEntity<>(bookService.save(bookPostRequestBody, authorNames), HttpStatus.CREATED);
     }
 
     @DeleteMapping(path = "/{bookId}")
@@ -53,7 +60,7 @@ public class BookController {
     }
 
     @PutMapping
-    public ResponseEntity<Book> replace(@RequestBody @Valid BookPutRequestBody bookPutRequestBody) {
+    public ResponseEntity<Void> replace(@RequestBody @Valid BookPutRequestBody bookPutRequestBody) {
         bookService.replace(bookPutRequestBody);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

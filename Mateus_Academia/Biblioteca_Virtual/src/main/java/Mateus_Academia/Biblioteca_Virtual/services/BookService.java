@@ -1,13 +1,13 @@
 package Mateus_Academia.Biblioteca_Virtual.services;
 
-import Mateus_Academia.Biblioteca_Virtual.repository.AuthorRepository;
-import Mateus_Academia.Biblioteca_Virtual.repository.BookRepository;
-import Mateus_Academia.Biblioteca_Virtual.repository.RentRepository;
 import Mateus_Academia.Biblioteca_Virtual.entities.Author;
 import Mateus_Academia.Biblioteca_Virtual.entities.Book;
 import Mateus_Academia.Biblioteca_Virtual.entities.Rent;
 import Mateus_Academia.Biblioteca_Virtual.exceptions.BadRequestException;
 import Mateus_Academia.Biblioteca_Virtual.mapper.BookMapper;
+import Mateus_Academia.Biblioteca_Virtual.repository.AuthorRepository;
+import Mateus_Academia.Biblioteca_Virtual.repository.BookRepository;
+import Mateus_Academia.Biblioteca_Virtual.repository.RentRepository;
 import Mateus_Academia.Biblioteca_Virtual.requests.BookPostRequestBody;
 import Mateus_Academia.Biblioteca_Virtual.requests.BookPutRequestBody;
 import lombok.RequiredArgsConstructor;
@@ -104,6 +104,7 @@ public class BookService {
         book.setAuthors(savedBook.getAuthors());
         bookRepository.save(book);
     }
+
     public boolean isIsbnUnique(String isbn){
         boolean unique = false;
         List<Book> books = bookRepository.findAll();
@@ -123,5 +124,9 @@ public class BookService {
         return unique;
     }
 
-
+    public List<Author> listAllAuthors(long bookId) {
+        Book book = findByIdOrThrowBadRequestException(bookId);
+        List<Author> authors = book.getAuthors();
+        return authors;
+    }
 }

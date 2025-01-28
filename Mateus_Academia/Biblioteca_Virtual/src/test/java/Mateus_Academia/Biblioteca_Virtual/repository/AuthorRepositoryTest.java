@@ -11,6 +11,8 @@ import javax.validation.ConstraintViolationException;
 import java.util.List;
 import java.util.Optional;
 
+import static Mateus_Academia.Biblioteca_Virtual.Utils.AuthorEntitiesBuilder.authorBuilder;
+
 @DataJpaTest
 @DisplayName("Tests for Author Repository")
 class AuthorRepositoryTest {
@@ -77,14 +79,6 @@ class AuthorRepositoryTest {
                 .withMessageContaining("The name cannot be empty")
                 .withMessageContaining("The birth year needs to be informed and must be greater than 0")
                 .withMessageContaining("The cpf cannot be empty");
-    }
-    private Author authorBuilder(){
-        return Author.builder()
-                .name("Author_Test")
-                .cpf("00000000000")
-                .birthYear(2000)
-                .booksMade(null)
-                .build();
     }
 
 }

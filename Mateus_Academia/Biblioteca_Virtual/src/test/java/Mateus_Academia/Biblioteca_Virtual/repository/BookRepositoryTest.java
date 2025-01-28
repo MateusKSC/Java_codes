@@ -8,9 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import javax.validation.ConstraintViolationException;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+
+import static Mateus_Academia.Biblioteca_Virtual.Utils.BookEntitiesBuilder.bookBuilder;
 
 @DataJpaTest
 @DisplayName("Tests for Book Repository")
@@ -21,16 +22,17 @@ class BookRepositoryTest {
 
     @Test
     @DisplayName("Creates and then saves a Book when successful")
-    public void saveBookWhenSuccessful(){
+    public void saveBookWhenSuccessful() {
         Book book = bookBuilder();
         Book savedBook = bookRepository.save(book);
         Assertions.assertThat(savedBook).isNotNull();
         Assertions.assertThat(savedBook.getId()).isNotNull();
         Assertions.assertThat(savedBook.getName()).isEqualTo(book.getName());
     }
+
     @Test
     @DisplayName("saves and then updates a Book when successful")
-    public void updateBookWhenSuccessful(){
+    public void updateBookWhenSuccessful() {
         Book book = bookBuilder();
         Book savedBook = bookRepository.save(book);
         savedBook.setName("Book_Updated");
@@ -39,9 +41,10 @@ class BookRepositoryTest {
         Assertions.assertThat(bookUpdated.getId()).isNotNull();
         Assertions.assertThat(bookUpdated.getName()).isEqualTo(savedBook.getName());
     }
+
     @Test
     @DisplayName("saves and then deletes a Book when successful")
-    public void deleteBookWhenSuccessful(){
+    public void deleteBookWhenSuccessful() {
         Book book = bookBuilder();
         Book savedBook = bookRepository.save(book);
         bookRepository.delete(savedBook);
@@ -49,9 +52,10 @@ class BookRepositoryTest {
 
         Assertions.assertThat(optionalBook).isEmpty();
     }
+
     @Test
     @DisplayName("finds a Book by name and then returns a list of Books when successful")
-    public void findBookByNameWhenSuccessful(){
+    public void findBookByNameWhenSuccessful() {
         Book book = bookBuilder();
         Book savedBook = bookRepository.save(book);
         List<Book> books = bookRepository.findByName(book.getName());
@@ -60,18 +64,20 @@ class BookRepositoryTest {
                 .isNotEmpty()
                 .contains(savedBook);
     }
+
     @Test
     @DisplayName("tries to find a Book by name and then returns an empty list of Books when unsuccessful")
-    public void failsToFindBookByName(){
+    public void failsToFindBookByName() {
         Book book = bookBuilder();
         bookRepository.save(book);
         List<Book> books = bookRepository.findByName("Different_Name");
 
         Assertions.assertThat(books).isEmpty();
     }
+
     @Test
     @DisplayName("Tries to save a Book but fails because of empty input values")
-    public void failsToSaveBook_ThrowConstraintViolationException_EmptyValues(){
+    public void failsToSaveBook_ThrowConstraintViolationException_EmptyValues() {
         Book book = new Book();
         Assertions.assertThatExceptionOfType(ConstraintViolationException.class)
                 .isThrownBy(() -> bookRepository.save(book))
@@ -79,22 +85,14 @@ class BookRepositoryTest {
                 .withMessageContaining("The isbn may not be empty!")
                 .withMessageContaining("The date may not be empty!");
     }
+
     @Test
     @DisplayName("Tries to save a Book but fails because of invalid ISBN pattern")
-    public void failsToSaveBook_ThrowConstraintViolationException_InvalidIsbnFormat(){
+    public void failsToSaveBook_ThrowConstraintViolationException_InvalidIsbnFormat() {
         Book book = new Book();
         book.setIsbn("invalid isbn");
         Assertions.assertThatExceptionOfType(ConstraintViolationException.class)
                 .isThrownBy(() -> bookRepository.save(book))
                 .withMessageContaining("The ISBN's pattern is invalid!");
-    }
-    private Book bookBuilder(){
-        Date date = new Date();
-        return Book.builder()
-                .name("Book_Test")
-                .publicationDate(date)
-                .authors(null)
-                .isbn("9780596520687")
-                .build();
     }
 }

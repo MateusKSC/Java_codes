@@ -23,7 +23,6 @@ public class RentController {
     private final RentService rentService;
 
 
-
     @GetMapping
     public ResponseEntity<List<Rent>> list() {
         log.info(dateUtil.formatLocalDateTimeToDatabaseStyle(LocalDateTime.now()));
@@ -40,18 +39,21 @@ public class RentController {
         log.info(dateUtil.formatLocalDateTimeToDatabaseStyle(LocalDateTime.now()));
         return ResponseEntity.ok(rentService.listAllRentedBooks());
     }
+
     @GetMapping(path = "/availableBooks")
     public ResponseEntity listAllAvailableBooksForRent() {
         return ResponseEntity.ok(rentService.listAllAvailableBooksForRent());
     }
+
     @PostMapping(path = "/{renterName}/{bookNames}")
     public ResponseEntity<Rent> save(@PathVariable String renterName, @PathVariable List<String> bookNames) {
         return new ResponseEntity<>(rentService.save(renterName, bookNames), HttpStatus.CREATED);
     }
 
     @PutMapping(path = "/{rentId}")
-    public ResponseEntity<Rent> replace(@PathVariable long rentId) {
-        return new ResponseEntity<>(rentService.replace(rentId), HttpStatus.CREATED);
+    public ResponseEntity<Void> replace(@PathVariable long rentId) {
+        rentService.replace(rentId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @DeleteMapping(path = "/{rentId}")
