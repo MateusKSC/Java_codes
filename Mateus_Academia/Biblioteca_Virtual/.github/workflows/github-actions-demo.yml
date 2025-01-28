@@ -23,7 +23,7 @@ jobs:
       - name: Build with Maven
         run: |
           mvn clean package 
-
+          mvn clean install -f Mateus_Academia/Biblioteca_Virtual/pom.xml
       - name: Run Unit Tests
         run: |
           mvn test
