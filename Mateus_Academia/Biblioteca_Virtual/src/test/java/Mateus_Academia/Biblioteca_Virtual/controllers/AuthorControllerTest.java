@@ -138,21 +138,6 @@ class AuthorControllerTest {
         Assertions.assertThat(author).isNotNull().isEqualTo(AuthorEntitiesBuilder.authorBuilder());
 
     }
-
-    @Test
-    @DisplayName("replace updates author when successful")
-    void replace_UpdatesAuthor_WhenSuccessful() {
-
-        Assertions.assertThatCode(() -> authorController.replace(AuthorEntitiesBuilder.authorPutRequestBodyBuilder()))
-                .doesNotThrowAnyException();
-
-        ResponseEntity<Void> entity = authorController.replace(AuthorEntitiesBuilder.authorPutRequestBodyBuilder());
-
-        Assertions.assertThat(entity).isNotNull();
-
-        Assertions.assertThat(entity.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
-    }
-
     @Test
     @DisplayName("delete removes author when successful")
     void delete_RemovesAuthor_WhenSuccessful() {

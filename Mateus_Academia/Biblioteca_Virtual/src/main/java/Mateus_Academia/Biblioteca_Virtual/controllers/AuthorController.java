@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
-@RequestMapping("authors")
+@RequestMapping("v1/authors")
 @Log4j2
 @RequiredArgsConstructor
 public class AuthorController {

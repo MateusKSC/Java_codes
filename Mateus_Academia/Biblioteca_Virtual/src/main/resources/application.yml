@@ -9,6 +9,8 @@ spring:
     password: root
   jpa:
     hibernate:
+      show-sql: true
+      ddl: true
       ddl-auto: update
 some_boolean:
   value: true
