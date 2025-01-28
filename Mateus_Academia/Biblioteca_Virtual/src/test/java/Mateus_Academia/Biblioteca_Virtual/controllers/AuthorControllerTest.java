@@ -7,7 +7,6 @@ import Mateus_Academia.Biblioteca_Virtual.entities.Book;
 import Mateus_Academia.Biblioteca_Virtual.requests.AuthorPostRequestBody;
 import Mateus_Academia.Biblioteca_Virtual.requests.AuthorPutRequestBody;
 import Mateus_Academia.Biblioteca_Virtual.services.AuthorService;
-import Mateus_Academia.Biblioteca_Virtual.utilities.DateUtil;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -29,8 +28,6 @@ class AuthorControllerTest {
     @InjectMocks
     private AuthorController authorController;
 
-    @Mock
-    private DateUtil dateUtil;
 
     @Mock
     private AuthorService authorServiceMock;
